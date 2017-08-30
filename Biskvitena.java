@@ -9,6 +9,8 @@ public class Biskvitena extends AbstractCakeStandard {
 		super(name, description, cost, pieces, CakesType.BISKVITENA, isSyrupy);
 		}
 
+	
+
 
 	
 }
