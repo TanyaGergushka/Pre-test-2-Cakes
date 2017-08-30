@@ -3,11 +3,12 @@ package pastryShop;
 import java.awt.List;
 
 import java.util.ArrayList;
-
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class CakeShop extends AbstractData {
 
 	private String adress;
 	private ArrayList<Supplier> suppliers;
-	private TreeMap<CakesKind, TreeMap<CakesType, TreeSet<AbstractCake>>> catalog;
+	private HashMap<CakesKind, TreeMap<CakesType, TreeSet<AbstractCake>>> catalog;
 	private double moneyFromSells;
 	public static int cakeCount = 0;
 	private TreeMap<CakesKind, Integer> sellsCake;
@@ -33,7 +34,7 @@ public class CakeShop extends AbstractData {
 
 		suppliers = new ArrayList<Supplier>();
 
-		catalog = new TreeMap<>();
+		catalog = new HashMap<>();
 		catalog.put(CakesKind.BABY, new TreeMap<CakesType, TreeSet<AbstractCake>>());
 		catalog.put(CakesKind.SPECIAL, new TreeMap<CakesType, TreeSet<AbstractCake>>());
 		catalog.put(CakesKind.STANDART, new TreeMap<CakesType, TreeSet<AbstractCake>>());
@@ -58,14 +59,14 @@ public class CakeShop extends AbstractData {
 		sellsCake.put(CakesKind.SPECIAL, 0);
 		sellsCake.put(CakesKind.STANDART, 0);
 		sellsCake.put(CakesKind.WEDDING, 0);
-		
+
 	}
 
 	public void addMoneyFromSells(double moneyFromSells) {
 		this.moneyFromSells += moneyFromSells;
 	}
 
-	public void setAdress(String adress) {
+	private void setAdress(String adress) {
 		this.adress = adress;
 	}
 
@@ -93,41 +94,38 @@ public class CakeShop extends AbstractData {
 	}
 
 	public void sell(ArrayList<AbstractCake> cakes) {
-
 		for (int i = 0; i < cakes.size(); i++) {
 			AbstractCake cakess = cakes.get(i);
-
 			for (CakesKind kind : this.catalog.keySet()) {
 				if ((this.catalog.get(kind).containsKey(cakess.getType()))) {
 					for (CakesType type : this.catalog.get(kind).keySet()) {
 						if (type.equals(cakess.getType())) {
-							System.out.println("type");
-							for (AbstractCake cake : this.catalog.get(kind).get(type)) {
-								if (cake.equals(cakess)) {
+							TreeSet<AbstractCake> typeSet = new TreeSet<>();
+							typeSet = this.catalog.get(kind).get(cakess.getType());
+							for (Iterator<AbstractCake> iter = typeSet.iterator(); iter.hasNext();) {
+								AbstractCake cake = iter.next();
+								if (cake.compareTo(cakess) == 0) {
 									switch (cakess.getKind()) {
 									case BABY:
-										sellsCake.put(CakesKind.BABY, sellsCake.get(CakesKind.BABY)+1);
+										sellsCake.put(CakesKind.BABY, sellsCake.get(CakesKind.BABY) + 1);
 										break;
 									case STANDART:
-										sellsCake.put(CakesKind.STANDART, sellsCake.get(CakesKind.STANDART)+1);
+										sellsCake.put(CakesKind.STANDART, sellsCake.get(CakesKind.STANDART) + 1);
 										break;
 									case SPECIAL:
-										sellsCake.put(CakesKind.SPECIAL, sellsCake.get(CakesKind.SPECIAL)+1);
+										sellsCake.put(CakesKind.SPECIAL, sellsCake.get(CakesKind.SPECIAL) + 1);
 										break;
 									case WEDDING:
-										sellsCake.put(CakesKind.WEDDING, sellsCake.get(CakesKind.WEDDING)+1);
+										sellsCake.put(CakesKind.WEDDING, sellsCake.get(CakesKind.WEDDING) + 1);
 										break;
 									default:
 										break;
-									}									
+									}
+									iter.remove();
 									cakeCount--;
-									System.out.println("sold");
 								}
 							}
-
-							// System.out.println(this.catalog.get(kind).get(type).size());
 						}
-
 					}
 				}
 			}
@@ -142,7 +140,7 @@ public class CakeShop extends AbstractData {
 				System.out.println(cake);
 			}
 		}
-		System.out.println("----------" + cakeCount);
+		System.out.println("----------  " + cakeCount);
 	}
 
 	private Comparator<AbstractCake> comparatorByPrice = new Comparator<AbstractCake>() {
@@ -196,17 +194,20 @@ public class CakeShop extends AbstractData {
 		});
 		suppSet.addAll(this.suppliers);
 		return suppSet;
-
 	}
-	
-	public void printSoldCakes (){
-	System.out.println();
+
+	public void printSoldCakes() {
+		int count = 0;
+		CakesKind x = null;
+		System.out.println("-------Sold----------");
 		for (Entry<CakesKind, Integer> i : sellsCake.entrySet()) {
 			System.out.println(i.getKey() + " " + i.getValue());
-			
+			if (count < i.getValue()) {
+				count = i.getValue();
+				x = i.getKey();
+			}
 		}
-		System.out.println();
+		System.out.println("---- The best selling cake is "+ x + " " + count + "\n");
 	}
-	
 
 }

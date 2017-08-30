@@ -18,7 +18,7 @@ public class ClientsCorporate extends AbstractClient {
 	double moneyForOrder;
 
 	public void setPaidMoney(double paidMoney) {
-		this.paidMoney +=  paidMoney;
+		this.paidMoney += paidMoney;
 	}
 
 	public ClientsCorporate(String name) {
@@ -32,7 +32,7 @@ public class ClientsCorporate extends AbstractClient {
 	public void makeOrder(CakeShop shop, String adress, ArrayList<AbstractCake> cakes) {
 		Supplier supp = shop.returnSupplier();
 		Order newOrder = new Order(this, adress, cakes, supp);
-		double totalSum = newOrder.getCost() - (newOrder.getCost()*this.discount);
+		double totalSum = newOrder.getCost() - (newOrder.getCost() * this.discount);
 		double bonus = totalSum * this.getGratuity();
 
 		if (cakes.size() >= 3 && cakes.size() <= 5) {
@@ -42,13 +42,10 @@ public class ClientsCorporate extends AbstractClient {
 			supp.addMoneyToSupplier(bonus);
 			supp.addOrderToOrderSet(newOrder);
 			shop.addMoneyFromSells(totalSum);
-				} else {
+		} else {
 			System.out.println("Cakes should be between 3 and 5");
 		}
 
 	}
-
-	
-	
 
 }

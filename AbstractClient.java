@@ -21,15 +21,15 @@ public abstract class AbstractClient extends AbstractData {
 		super.setName(name);
 	}
 
-	public void setDiscount(double discount) {
+	protected void setDiscount(double discount) {
 		this.discount = discount;
 	}
 
-	public double getDiscount() {
+	protected double getDiscount() {
 		return discount;
 	}
 
-	public double getGratuity() {
+	protected double getGratuity() {
 		return gratuity;
 	}
 
@@ -38,15 +38,15 @@ public abstract class AbstractClient extends AbstractData {
 		return this.getName() +  ", paidMoney=" + paidMoney + "\n" ;
 	}
 
-	public void setGratuity(double gratuity) {
+	protected void setGratuity(double gratuity) {
 		this.gratuity = gratuity;
 	}
 
-	public void setPaidMoney(double paidMoney) {
+	protected void setPaidMoney(double paidMoney) {
 		this.paidMoney += paidMoney;
 	}
 
-	public double getPaidMoney() {
+	protected double getPaidMoney() {
 		return paidMoney;
 	}
 

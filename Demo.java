@@ -1,21 +1,10 @@
 package pastryShop;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
-import java.util.TreeMap;
 import java.util.TreeSet;
-
-import org.w3c.dom.css.Counter;
-
 import pastryShopKindCakes.AbstractCake;
-import pastryShopKindCakes.AbstractCake.CakesKind;
-import pastryShopKindCakes.AbstractCake.CakesType;
-import pastryShopKindCakes.AbstractCake.CakesType.BISKVITENA;
 import pastryShopKindCakes.Biskvitena;
 import pastryShopKindCakes.Eklerova;
 import pastryShopKindCakes.Firmena;
@@ -249,10 +238,9 @@ public class Demo {
 		System.out.println("--------------Suppliers------");
 		TreeSet<Supplier> sortedSuppliers = sweetTalants.sortedSuppliers();
 		for (Supplier supplier : sortedSuppliers) {
-			System.out.println(supplier.getName() + " " + supplier.getMoney());
+			System.out.println(supplier.getName() + ", money: " + supplier.getMoney() + ", Number of orders: " + supplier.getOrderSet().size());
 		}
-		// Demo item 8
-		sweetTalants.printSoldCakes();
+		
 		
 
 		// Demo item 9
@@ -267,10 +255,14 @@ public class Demo {
 			}
 		});
 		
+		
 		sortedSupp.addAll(sortedSuppliers);
-		System.out.println("Supplier with the most orders " + sortedSupp.first().getName());
+		System.out.println("\n Supplier with the most orders " + sortedSupp.first().getName());
 
 		System.out.println();
+
+		// Demo item 8
+		sweetTalants.printSoldCakes();
 		
 		
 		// Demo item 10
